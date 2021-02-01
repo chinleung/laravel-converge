@@ -68,6 +68,17 @@ class Card implements Chargeable
     }
 
     /**
+     * Create a new card instance.
+     *
+     * @param  mixed  $args
+     * @return self
+     */
+    public static function make(...$args): self
+    {
+        return new static(...$args);
+    }
+
+    /**
      * Create a test MasterCard card.
      *
      * @return self
