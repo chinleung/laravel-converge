@@ -60,7 +60,7 @@ class Card implements Chargeable
      */
     public static function fake(string $number): self
     {
-        return new self(
+        return new static(
             $number,
             Carbon::now()->addYear()->format('my'),
             mt_rand(100, 999)
