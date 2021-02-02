@@ -68,6 +68,36 @@ class Card implements Chargeable
     }
 
     /**
+     * Retrieve the cvc of the card.
+     *
+     * @return string
+     */
+    public function getCvc(): string
+    {
+        return $this->cvc;
+    }
+
+    /**
+     * Retrieve the expiration of the card.
+     *
+     * @return string
+     */
+    public function getExpiry(): string
+    {
+        return $this->expiry;
+    }
+
+    /**
+     * Retrieve the number of the card.
+     *
+     * @return string
+     */
+    public function getNumber(): string
+    {
+        return $this->number;
+    }
+
+    /**
      * Create a new card instance.
      *
      * @param  mixed  $args
