@@ -3,6 +3,7 @@
 namespace ChinLeung\Converge;
 
 use ChinLeung\Converge\Contracts\Chargeable;
+use ChinLeung\Converge\Exceptions\CardException;
 use ChinLeung\Converge\Http\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -76,6 +77,10 @@ class Client
                 'ssl_amount' => $amount / 100,
             ]
         ));
+
+        if ($response->get('ssl_result') === '1') {
+            throw new CardException($response->get('ssl_result_message'));
+        }
 
         return new Charge($response);
     }
