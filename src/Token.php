@@ -24,6 +24,16 @@ class Token implements Chargeable
     }
 
     /**
+     * Retrieve the value of the token.
+     *
+     * @return string
+     */
+    public function getValue(): string
+    {
+        return $this->value;
+    }
+
+    /**
      * Retrieve the information of the card for a payload.
      *
      * @return array
