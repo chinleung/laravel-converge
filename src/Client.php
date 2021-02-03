@@ -108,7 +108,7 @@ class Client
      * @param  array  $options
      * @return \ChinLeung\Converge\Token
      */
-    public function generateToken(Card $card, array $options): Token
+    public function generateToken(Card $card, array $options = []): Token
     {
         $response = $this->send('ccgettoken', array_merge(
             $card->toPayload(),
@@ -171,7 +171,7 @@ class Client
      * @param  array  $options
      * @return \ChinLeung\Converge\Token
      */
-    public function saveToken(Card $card, array $options): Token
+    public function saveToken(Card $card, array $options = []): Token
     {
         return $this->generateToken($card, array_merge($options, [
             'ssl_add_token' => 'Y',
