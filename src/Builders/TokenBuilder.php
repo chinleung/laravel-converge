@@ -4,6 +4,7 @@ namespace ChinLeung\Converge\Builders;
 
 use ChinLeung\Converge\Card;
 use ChinLeung\Converge\Client;
+use ChinLeung\Converge\Customer;
 use ChinLeung\Converge\Token;
 
 class TokenBuilder extends Builder
@@ -14,6 +15,13 @@ class TokenBuilder extends Builder
      * @var \ChinLeung\Converge\Card
      */
     protected $card;
+
+    /**
+     * The customer of the card.
+     *
+     * @var \ChinLeung\Converge\Customer
+     */
+    protected $customer;
 
     /**
      * Set the card of the token.
@@ -37,12 +45,28 @@ class TokenBuilder extends Builder
      */
     public function create(): Token
     {
-        $response = resolve(Client::class)->send(
-            'ccgettoken',
-            array_merge($this->card->toPayload(), $this->options)
-        );
+        $payload = array_merge($this->card->toPayload(), $this->options);
+
+        if ($this->customer) {
+            $payload = array_merge($payload, $this->customer->toPayload());
+        }
+
+        $response = resolve(Client::class)->send('ccgettoken', $payload);
 
         return Token::make($response->get('ssl_token'));
+    }
+
+    /**
+     * Set the customer of the token.
+     *
+     * @param  \ChinLeung\Converge\Customer  $customer
+     * @return self
+     */
+    public function customer(Customer $customer): self
+    {
+        $this->customer = $customer;
+
+        return $this;
     }
 
     /**
