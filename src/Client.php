@@ -2,8 +2,6 @@
 
 namespace ChinLeung\Converge;
 
-use ChinLeung\Converge\Contracts\Chargeable;
-use ChinLeung\Converge\Exceptions\CardException;
 use ChinLeung\Converge\Http\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
@@ -59,33 +57,6 @@ class Client
     }
 
     /**
-     * Charge a token or card.
-     *
-     * @link  https://developer.elavon.com/na/docs/converge/1.0.0/integration-guide/transaction_types/credit_card/sale
-     *
-     * @param  \ChinLeung\Converge\Contracts\Chargeable  $chargeable
-     * @param  int  $amount
-     * @param  array  $options
-     * @return \ChinLeung\Converge\Charge
-     */
-    public function charge(Chargeable $chargeable, int $amount, array $options = []): Charge
-    {
-        $response = $this->send('ccsale', array_merge(
-            $chargeable->toPayload(),
-            $options,
-            [
-                'ssl_amount' => $amount / 100,
-            ]
-        ));
-
-        if ($response->get('ssl_result') === '1') {
-            throw new CardException($response->get('ssl_result_message'));
-        }
-
-        return new Charge($response);
-    }
-
-    /**
      * Update the client's endpoint to use the demo environment endpoint.
      *
      * @return void
@@ -97,25 +68,6 @@ class Client
             'api.demo.convergepay',
             $this->endpoint
         );
-    }
-
-    /**
-     * Generate a token for a card.
-     *
-     * @link  https://developer.elavon.com/na/docs/converge/1.0.0/integration-guide/transaction_types/card_manager/generate_token
-     *
-     * @param  \ChinLeung\Converge\Card  $card
-     * @param  array  $options
-     * @return \ChinLeung\Converge\Token
-     */
-    public function generateToken(Card $card, array $options = []): Token
-    {
-        $response = $this->send('ccgettoken', array_merge(
-            $card->toPayload(),
-            $options
-        ));
-
-        return new Token($response->get('ssl_token'));
     }
 
     /**
@@ -146,46 +98,13 @@ class Client
     }
 
     /**
-     * Refund a transaction.
-     *
-     * @link  https://developer.elavon.com/na/docs/converge/1.0.0/integration-guide/transaction_types/credit_card/return
-     *
-     * @param  string  $id
-     * @param  int  $amount
-     * @return \ChinLeung\Converge\Http\Response
-     */
-    public function refund(string $id, int $amount = null): Response
-    {
-        return $this->send('ccreturn', array_filter([
-            'ssl_txn_id' => $id,
-            'ssl_amount' => $amount / 100,
-        ]));
-    }
-
-    /**
-     * Save a token to the vault for a card.
-     *
-     * @link  https://developer.elavon.com/na/docs/converge/1.0.0/integration-guide/transaction_types/card_manager/generate_token
-     *
-     * @param  \ChinLeung\Converge\Card  $card
-     * @param  array  $options
-     * @return \ChinLeung\Converge\Token
-     */
-    public function saveToken(Card $card, array $options = []): Token
-    {
-        return $this->generateToken($card, array_merge($options, [
-            'ssl_add_token' => 'Y',
-        ]));
-    }
-
-    /**
      * Send the request to Converge's api.
      *
      * @param  string  $action
      * @param  array  $options
      * @return \ChinLeung\Converge\Http\Response
      */
-    protected function send(string $action, array $options = []): Response
+    public function send(string $action, array $options = []): Response
     {
         $payload = $this->generatePayload($action, $options);
 

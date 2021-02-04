@@ -2,25 +2,41 @@
 
 namespace ChinLeung\Converge;
 
-use ChinLeung\Converge\Http\Response;
+use ChinLeung\Converge\Builders\ChargeBuilder;
+use ChinLeung\Converge\Concerns\Makeable;
+use ChinLeung\Converge\Concerns\RequiresResponse;
+use ChinLeung\Converge\Contracts\Chargeable;
+use ChinLeung\Converge\Contracts\Transaction;
 
-class Charge
+class Charge implements Transaction
 {
-    /**
-     * The response from Converge's api.
-     *
-     * @var \ChinLeung\Converge\Http\Response
-     */
-    protected $response;
+    use Makeable, RequiresResponse;
 
     /**
-     * Create a new charge instance.
+     * Retrieve a new instance of the builder.
      *
-     * @param  \ChinLeung\Converge\Http\Response  $response
+     * @return \ChinLeung\Converge\Builders\ChargeBuilder
      */
-    public function __construct(Response $response)
+    public static function builder(): ChargeBuilder
     {
-        $this->response = $response;
+        return ChargeBuilder::make();
+    }
+
+    /**
+     * Create a charge.
+     *
+     * @param  \ChinLeung\Converge\Contracts\Chargeable  $chargeable
+     * @param  int  $amount
+     * @param  array  $options
+     * @return self
+     */
+    public static function create(Chargeable $chargeable, int $amount, array $options = []): self
+    {
+        return static::builder()
+            ->chargeable($chargeable)
+            ->amount($amount)
+            ->withOptions($options)
+            ->create();
     }
 
     /**

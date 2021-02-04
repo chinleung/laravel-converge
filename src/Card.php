@@ -2,11 +2,14 @@
 
 namespace ChinLeung\Converge;
 
+use ChinLeung\Converge\Concerns\Makeable;
 use ChinLeung\Converge\Contracts\Chargeable;
 use Illuminate\Support\Carbon;
 
 class Card implements Chargeable
 {
+    use Makeable;
+
     /**
      * The card number.
      *
@@ -95,17 +98,6 @@ class Card implements Chargeable
     public function getNumber(): string
     {
         return $this->number;
-    }
-
-    /**
-     * Create a new card instance.
-     *
-     * @param  mixed  $args
-     * @return self
-     */
-    public static function make(...$args): self
-    {
-        return new static(...$args);
     }
 
     /**
