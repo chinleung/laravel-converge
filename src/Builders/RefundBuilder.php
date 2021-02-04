@@ -62,7 +62,7 @@ class RefundBuilder extends Builder
      * @param  string  $transaction
      * @return self
      */
-    public function transaction(int $transaction): self
+    public function transaction(string $transaction): self
     {
         $this->transaction = $transaction;
 
