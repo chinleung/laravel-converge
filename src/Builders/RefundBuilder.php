@@ -38,6 +38,8 @@ class RefundBuilder extends Builder
     /**
      * Process the charge.
      *
+     * @link  https://developer.elavon.com/na/docs/converge/1.0.0/integration-guide/transaction_types/credit_card/return
+     *
      * @return \ChinLeung\Converge\Refund
      */
     public function create(): Refund
