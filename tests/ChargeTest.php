@@ -2,7 +2,9 @@
 
 namespace ChinLeung\Converge\Tests;
 
+use ChinLeung\Converge\Charge;
 use ChinLeung\Converge\Client;
+use ChinLeung\Converge\ConvergeServiceProvider;
 use ChinLeung\Converge\Exceptions\CardException;
 use ChinLeung\Converge\Token;
 use Illuminate\Support\Facades\Http;
@@ -18,16 +20,34 @@ class ChargeTest extends TestCase
      */
     public function a_charge_failure_will_trigger_a_card_exception(): void
     {
-        $client = new Client('id', 'user', 'pin', true);
+        config([
+            'converge.merchant_id' => 'merchant',
+            'converge.user.id' => 'user',
+            'converge.user.pin' => 'pin',
+            'converge.demo' => true,
+        ]);
 
         Http::fake([
-            $client->getEndpoint() => Http::response(file_get_contents(
+            resolve(Client::class)->getEndpoint() => Http::response(file_get_contents(
                 __DIR__.'/fixtures/charge-failed-response.txt'
             )),
         ]);
 
         $this->expectException(CardException::class);
 
-        $client->charge(new Token('token'), 100);
+        Charge::create(Token::make('token'), 100);
+    }
+
+    /**
+     * Retrieve the service providers of the package.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return array
+     */
+    protected function getPackageProviders($app): array
+    {
+        return [
+            ConvergeServiceProvider::class,
+        ];
     }
 }
