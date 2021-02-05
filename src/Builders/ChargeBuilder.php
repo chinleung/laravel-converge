@@ -4,11 +4,14 @@ namespace ChinLeung\Converge\Builders;
 
 use ChinLeung\Converge\Charge;
 use ChinLeung\Converge\Client;
+use ChinLeung\Converge\Concerns\HasCustomer;
 use ChinLeung\Converge\Contracts\Chargeable;
 use ChinLeung\Converge\Exceptions\CardException;
 
 class ChargeBuilder extends Builder
 {
+    use HasCustomer;
+
     /**
      * The chargeable for the transaction.
      *
@@ -56,13 +59,19 @@ class ChargeBuilder extends Builder
      */
     public function create(): Charge
     {
-        $response = resolve(Client::class)->send('ccsale', array_merge(
+        $payload = array_merge(
             $this->chargeable->toPayload(),
             $this->options,
             [
                 'ssl_amount' => $this->amount / 100,
             ]
-        ));
+        );
+
+        if ($this->customer) {
+            $payload = array_merge($payload, $this->customer->toPayload());
+        }
+
+        $response = resolve(Client::class)->send('ccsale', $payload);
 
         if ($response->get('ssl_result') === '1') {
             throw new CardException($response->get('ssl_result_message'));
