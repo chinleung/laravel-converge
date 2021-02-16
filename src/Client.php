@@ -14,7 +14,7 @@ class Client
      *
      * @var string
      */
-    protected $endpoint = 'https://api.convergepay.com/VirtualMerchantDemo/processxml.do';
+    protected $endpoint = 'https://api.convergepay.com/VirtualMerchant/processxml.do';
 
     /**
      * The merchant id of the account.
@@ -63,11 +63,7 @@ class Client
      */
     protected function demo(): void
     {
-        $this->endpoint = str_replace(
-            'api.convergepay',
-            'api.demo.convergepay',
-            $this->endpoint
-        );
+        $this->endpoint = 'https://api.demo.convergepay.com/VirtualMerchantDemo/processxml.do';
     }
 
     /**
