@@ -22,7 +22,7 @@ class ChargeBuilder extends Builder
     /**
      * The amount of the charge as minor units.
      *
-     * @var array
+     * @var int
      */
     protected $amount;
 
