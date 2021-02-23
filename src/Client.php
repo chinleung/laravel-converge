@@ -127,7 +127,7 @@ class Client
                 continue;
             }
 
-            $xml->addChild($key, $value);
+            $xml->addChild($key, htmlspecialchars($value));
         }
 
         return $xml->asXML();
