@@ -84,7 +84,7 @@ class Customer
      */
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = $firstName;
+        $this->firstName = substr($firstName, 0, 20);
 
         return $this;
     }
