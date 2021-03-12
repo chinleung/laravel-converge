@@ -3,6 +3,7 @@
 namespace ChinLeung\Converge\Http;
 
 use Illuminate\Http\Client\Response as ClientResponse;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use SimpleXMLElement;
 
@@ -30,6 +31,11 @@ class Response
     public function __construct(ClientResponse $response)
     {
         $this->response = $response;
+
+        if (config('converge.debug.log')) {
+            Log::debug(sprintf('Converge Response :: [%s]', $response->body()));
+        }
+
         $this->xml = simplexml_load_string($response->body());
 
         $this->throwException();
