@@ -58,7 +58,7 @@ class Customer
      */
     public function setCompany(string $company): self
     {
-        $this->company = $company;
+        $this->company = substr($company, 0, 50);
 
         return $this;
     }
