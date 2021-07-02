@@ -36,9 +36,23 @@ class Response
             Log::debug(sprintf('Converge Response :: [%s]', $response->body()));
         }
 
-        $this->xml = simplexml_load_string($response->body());
+        $this->xml = simplexml_load_string($this->cleanedBody());
 
         $this->throwException();
+    }
+
+    /**
+     * Retrieve the cleaned version of the XML.
+     *
+     * @return string
+     */
+    protected function cleanedBody(): string
+    {
+        return preg_replace(
+            ['/&(?!#?[a-z0-9]+;)/', '/<(?!\/?[a-z0-9]+)/'],
+            ['&amp;', '&lt;'],
+            $this->response->body()
+        );
     }
 
     /**
