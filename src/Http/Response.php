@@ -49,7 +49,7 @@ class Response
     protected function cleanedBody(): string
     {
         return preg_replace(
-            ['/&(?!#?[a-z0-9]+;)/', '/<(?!\/?[a-z0-9]+)/'],
+            ['/&(?!#?[a-z0-9]+;)/', '/<(?!(\?\/)?[a-z0-9]+)/'],
             ['&amp;', '&lt;'],
             $this->response->body()
         );
