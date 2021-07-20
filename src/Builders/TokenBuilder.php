@@ -5,6 +5,7 @@ namespace ChinLeung\Converge\Builders;
 use ChinLeung\Converge\Card;
 use ChinLeung\Converge\Client;
 use ChinLeung\Converge\Concerns\HasCustomer;
+use ChinLeung\Converge\Exceptions\CardException;
 use ChinLeung\Converge\Token;
 
 class TokenBuilder extends Builder
@@ -47,6 +48,10 @@ class TokenBuilder extends Builder
         }
 
         $response = resolve(Client::class)->send('ccgettoken', $payload);
+
+        if ($response->get('ssl_result') === '1') {
+            throw new CardException($response->get('ssl_result_message'));
+        }
 
         return Token::make($response->get('ssl_token'));
     }
