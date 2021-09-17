@@ -11,6 +11,7 @@ class TokenTest extends TestCase
      * A token can be converted to a request payload properly.
      *
      * @test
+     *
      * @return void
      */
     public function the_payload_will_be_correct(): void

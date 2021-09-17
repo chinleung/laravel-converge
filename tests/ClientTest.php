@@ -11,6 +11,7 @@ class ClientTest extends TestCase
      * The demo mode will update the client's endpoint.
      *
      * @test
+     *
      * @return void
      */
     public function the_demo_mode_will_update_the_endpoint(): void
