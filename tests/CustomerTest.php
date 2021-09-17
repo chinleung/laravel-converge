@@ -12,6 +12,7 @@ class CustomerTest extends TestCase
      * The first name of the customer will be truncated to 20 characters.
      *
      * @test
+     *
      * @return void
      */
     public function the_first_name_will_be_truncated_to_20_characters(): void

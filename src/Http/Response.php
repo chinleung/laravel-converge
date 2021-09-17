@@ -91,7 +91,7 @@ class Response
      *
      * @return void
      *
-     * @throws  \ChinLeung\Converge\Exceptions\InvalidRequestFormatException
+     * @throws \ChinLeung\Converge\Exceptions\InvalidRequestFormatException
      */
     protected function throwException(): void
     {

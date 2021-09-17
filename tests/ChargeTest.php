@@ -16,6 +16,7 @@ class ChargeTest extends TestCase
      * A charge failure will trigger a card exception.
      *
      * @test
+     *
      * @return void
      */
     public function a_charge_failure_will_trigger_a_card_exception(): void
