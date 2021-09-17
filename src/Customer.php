@@ -53,10 +53,10 @@ class Customer
     /**
      * Set the company name of the customer.
      *
-     * @param  string  $company
+     * @param  string|null  $company
      * @return self
      */
-    public function setCompany(string $company): self
+    public function setCompany(?string $company): self
     {
         $this->company = substr($company, 0, 50);
 
@@ -66,10 +66,10 @@ class Customer
     /**
      * Set the email of the customer.
      *
-     * @param  string  $email
+     * @param  string|null  $email
      * @return self
      */
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 
@@ -79,10 +79,10 @@ class Customer
     /**
      * Set the first name of the customer.
      *
-     * @param  string  $firstName
+     * @param  string|null  $firstName
      * @return self
      */
-    public function setFirstName(string $firstName): self
+    public function setFirstName(?string $firstName): self
     {
         $this->firstName = substr($firstName, 0, 20);
 
@@ -92,10 +92,10 @@ class Customer
     /**
      * Set the id of the customer.
      *
-     * @param  string  $id
+     * @param  string|null  $id
      * @return self
      */
-    public function setId(string $id): self
+    public function setId(?string $id): self
     {
         $this->id = $id;
 
@@ -105,10 +105,10 @@ class Customer
     /**
      * Set the last name of the customer.
      *
-     * @param  string  $lastName
+     * @param  string|null  $lastName
      * @return self
      */
-    public function setLastName(string $lastName): self
+    public function setLastName(?string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -118,10 +118,10 @@ class Customer
     /**
      * Set the phone of the customer.
      *
-     * @param  string  $phone
+     * @param  string|null  $phone
      * @return self
      */
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
