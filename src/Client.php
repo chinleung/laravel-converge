@@ -117,7 +117,7 @@ class Client
      * @param  \SimpleXMLElement  $instance
      * @return string
      */
-    protected function toXml(array $data, string $root = '<txn/>', SimpleXMLElement $instance = null): string
+    protected function toXml(array $data, string $root = '<txn/>', ?SimpleXMLElement $instance = null): string
     {
         $xml = $instance ?? new SimpleXMLElement($root);
 

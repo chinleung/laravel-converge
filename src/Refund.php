@@ -29,7 +29,7 @@ class Refund implements Transaction
      * @param  array  $options
      * @return self
      */
-    public static function create(string $transaction, int $amount = null, array $options = []): self
+    public static function create(string $transaction, ?int $amount = null, array $options = []): self
     {
         $builder = static::builder()
             ->transaction($transaction)
